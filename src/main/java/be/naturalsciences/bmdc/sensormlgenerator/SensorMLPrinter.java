@@ -7,29 +7,41 @@ package be.naturalsciences.bmdc.sensormlgenerator;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import org.seadatanet.csr.org.isotc211._2005.gmi.MIMetadataType;
+import javax.xml.namespace.QName;
+import net.opengis.sensorml.AbstractPhysicalProcessType;
+import net.opengis.sensorml.PhysicalComponentType;
+import net.opengis.sensorml.PhysicalSystemType;
 
 /**
  *
  * @author thomas
  */
-public class SensorMLPrinter {
+public class SensorMLPrinter<S extends AbstractPhysicalProcessType> {
 
-    private SensorMLBuilder builder;
+    //private SensorMLBuilder builder;
     private Marshaller marshaller;
-    public SensorMLBuilder getBuilder() {
-        return builder;
-    }
+    private S system;
+    private Class<S> cls;
 
-    public SensorMLPrinter(SensorMLBuilder builder) throws JAXBException {
-        this.builder = builder;
-        JAXBContext jaxbContext = JAXBContext.newInstance(MIMetadataType.class);
-
+    public SensorMLPrinter(S system, Class<S> cls) throws JAXBException {
+        this.system = system;
+        this.cls = cls;
+        JAXBContext jaxbContext = JAXBContext.newInstance(cls);
         marshaller = jaxbContext.createMarshaller();
         process();
+    }
+
+    private static Map<Class, String> CLASS_TO_XML = new HashMap();
+
+    static {
+        CLASS_TO_XML.put(PhysicalSystemType.class, "PhysicalSystem");
+        CLASS_TO_XML.put(PhysicalComponentType.class, "PhysicalComponent");
     }
 
     private void process() throws JAXBException {
@@ -37,17 +49,24 @@ public class SensorMLPrinter {
     }
 
     public void createFile(File file, boolean overwrite) throws JAXBException {
-        marshaller.marshal(builder.getMetadata(), file);
+        JAXBElement<S> jaxbElement = new JAXBElement<S>(new QName("sml", CLASS_TO_XML.get(cls)), cls, system);
+
+        marshaller.marshal(jaxbElement, file);
     }
 
     public String getResult() throws JAXBException {
         StringWriter writer = new StringWriter();
-        marshaller.marshal(builder.getMetadata(), writer);
+
+        JAXBElement<S> jaxbElement = new JAXBElement<S>(new QName("sml", CLASS_TO_XML.get(cls)), cls, system);
+
+        marshaller.marshal(jaxbElement, writer);
         return writer.toString();
     }
 
     public void print() throws JAXBException {
-        marshaller.marshal(builder.getMetadata(), System.out);
+        JAXBElement<S> jaxbElement = new JAXBElement<S>(new QName("sml", CLASS_TO_XML.get(cls.getSimpleName())), cls, system);
+
+        marshaller.marshal(jaxbElement, System.out);
     }
 
 }

@@ -4,6 +4,18 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.03.18 at 12:05:10 PM CET 
 //
-
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.opengis.net/sensorml/2.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@XmlSchema(namespace = "http://www.opengis.net/sensorml/2.0", elementFormDefault = XmlNsForm.QUALIFIED,
+        xmlns = {
+            @XmlNs(prefix = "sml", namespaceURI = "http://www.opengis.net/sensorml/2.0"),
+            @XmlNs(prefix = "gmd", namespaceURI = "http://www.isotc211.org/2005/gmd"),
+            @XmlNs(prefix = "gco", namespaceURI = "http://www.isotc211.org/2005/gco"),
+            @XmlNs(prefix = "gts", namespaceURI = "http://www.isotc211.org/2005/gts"),
+            @XmlNs(prefix = "xlink", namespaceURI = "http://www.w3.org/1999/xlink"),
+            @XmlNs(prefix = "gml", namespaceURI = "http://www.opengis.net/gml/3.2"),
+            @XmlNs(prefix = "swe", namespaceURI = "http://www.opengis.net/swe/2.0")
+        })
 package net.opengis.sensorml;
+
+import javax.xml.bind.annotation.XmlNs;
+import javax.xml.bind.annotation.XmlNsForm;
+import javax.xml.bind.annotation.XmlSchema;

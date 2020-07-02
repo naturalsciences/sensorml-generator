@@ -42,7 +42,7 @@ import org.w3._1999.xlink.TypeType;
 @XmlType(name = "CategoryPropertyType", propOrder = {
     "category"
 })
-public class CategoryPropertyType {
+public class CategoryPropertyType extends AbstractDataComponentPropertyType{
 
     @XmlElement(name = "Category")
     protected CategoryType category;

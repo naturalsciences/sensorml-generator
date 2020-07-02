@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.03.18 at 12:05:10 PM CET 
 //
-
-
 package net.opengis.swe;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,12 +15,14 @@ import org.w3._1999.xlink.ActuateType;
 import org.w3._1999.xlink.ShowType;
 import org.w3._1999.xlink.TypeType;
 
-
 /**
- * <p>Java class for QuantityPropertyType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for QuantityPropertyType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="QuantityPropertyType">
  *   &lt;complexContent>
@@ -35,14 +35,14 @@ import org.w3._1999.xlink.TypeType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QuantityPropertyType", propOrder = {
     "quantity"
 })
-public class QuantityPropertyType {
+public class QuantityPropertyType extends AbstractDataComponentPropertyType {
 
     @XmlElement(name = "Quantity")
     protected QuantityType quantity;
@@ -63,11 +63,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the quantity property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link QuantityType }
-     *     
+     *
+     * @return possible object is {@link QuantityType }
+     *
      */
     public QuantityType getQuantity() {
         return quantity;
@@ -75,11 +73,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the quantity property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link QuantityType }
-     *     
+     *
+     * @param value allowed object is {@link QuantityType }
+     *
      */
     public void setQuantity(QuantityType value) {
         this.quantity = value;
@@ -87,11 +83,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the type property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TypeType }
-     *     
+     *
+     * @return possible object is {@link TypeType }
+     *
      */
     public TypeType getType() {
         if (type == null) {
@@ -103,11 +97,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the type property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TypeType }
-     *     
+     *
+     * @param value allowed object is {@link TypeType }
+     *
      */
     public void setType(TypeType value) {
         this.type = value;
@@ -115,11 +107,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the href property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getHref() {
         return href;
@@ -127,11 +117,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the href property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setHref(String value) {
         this.href = value;
@@ -139,11 +127,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the role property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRole() {
         return role;
@@ -151,11 +137,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the role property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRole(String value) {
         this.role = value;
@@ -163,11 +147,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the arcrole property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getArcrole() {
         return arcrole;
@@ -175,11 +157,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the arcrole property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setArcrole(String value) {
         this.arcrole = value;
@@ -187,11 +167,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the title property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTitle() {
         return title;
@@ -199,11 +177,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the title property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTitle(String value) {
         this.title = value;
@@ -211,11 +187,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the show property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ShowType }
-     *     
+     *
+     * @return possible object is {@link ShowType }
+     *
      */
     public ShowType getShow() {
         return show;
@@ -223,11 +197,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the show property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ShowType }
-     *     
+     *
+     * @param value allowed object is {@link ShowType }
+     *
      */
     public void setShow(ShowType value) {
         this.show = value;
@@ -235,11 +207,9 @@ public class QuantityPropertyType {
 
     /**
      * Gets the value of the actuate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ActuateType }
-     *     
+     *
+     * @return possible object is {@link ActuateType }
+     *
      */
     public ActuateType getActuate() {
         return actuate;
@@ -247,11 +217,9 @@ public class QuantityPropertyType {
 
     /**
      * Sets the value of the actuate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ActuateType }
-     *     
+     *
+     * @param value allowed object is {@link ActuateType }
+     *
      */
     public void setActuate(ActuateType value) {
         this.actuate = value;

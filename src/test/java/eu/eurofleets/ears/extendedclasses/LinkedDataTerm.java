@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class LinkedDataTerm implements ILinkedDataTerm {
 
     private String identifier;  //an identifier in an external vocabulary, i.e. the EARS ontology or the BODC Tool list L22 (can only be url)
+    private String transitiveIdentifier;  //an identifier in an external vocabulary, i.e. the EARS ontology or the BODC Tool list L22 (can only be url)
     private String name;
 
     @Override
@@ -42,24 +43,43 @@ public class LinkedDataTerm implements ILinkedDataTerm {
         this.name = name;
     }
 
-    public final static Pattern URN_PATTERN = Pattern.compile(
-            "^[a-z0-9][a-z0-9-]{0,31}:([a-z0-9()+,\\-.:=@;$_!*']|%[0-9a-f]{2})+$",
-            Pattern.CASE_INSENSITIVE);
-
-    public final static Pattern URL_PATTERN = Pattern.compile(
-            "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})",
-            Pattern.CASE_INSENSITIVE);
+    @Override
+    public String getTransitiveIdentifier() {
+        return transitiveIdentifier != null ? transitiveIdentifier : identifier;
+    }
 
     @Override
-    public String getInnerMostIdentifier() {
-        if (URN_PATTERN.matcher(identifier).matches()) {
-            String[] split = identifier.split(":");
-            return split[split.length - 1];
-        } else if (URL_PATTERN.matcher(identifier).matches()) {
-            String[] split = identifier.split("/");
-            return split[split.length - 1];
-        } else {
-            return identifier;
-        }
+    public void setTransitiveIdentifier(String transitiveIdentifier) {
+        this.transitiveIdentifier = transitiveIdentifier;
+    }
+
+    @Override
+    public String getUrn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setUrn(String urn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getTransitiveUrn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setTransitiveUrn(String transitiveUrn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ILinkedDataTerm getTerm() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setTerm(ILinkedDataTerm country) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

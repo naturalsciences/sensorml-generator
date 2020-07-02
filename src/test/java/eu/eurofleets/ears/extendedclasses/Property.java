@@ -16,6 +16,7 @@ public class Property implements IProperty {
 
     private ILinkedDataTerm key;
     private String value;
+    private String uom;
 
     @Override
     public ILinkedDataTerm getKey() {
@@ -37,9 +38,23 @@ public class Property implements IProperty {
         this.value = value;
     }
 
-    public Property(ILinkedDataTerm key, String value) {
+    @Override
+    public String getUom() {
+        return uom;
+    }
+
+    @Override
+    public final void setUom(String uom) {
+        if ("".equals(uom)) {
+            uom = null;
+        }
+        this.uom = uom;
+    }
+
+    public Property(ILinkedDataTerm key, String value, String uom) {
         this.key = key;
         this.value = value;
+        setUom(uom);
     }
 
 }
