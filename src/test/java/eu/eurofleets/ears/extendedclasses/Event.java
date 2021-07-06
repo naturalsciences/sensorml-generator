@@ -3,6 +3,7 @@ package eu.eurofleets.ears.extendedclasses;
 import be.naturalsciences.bmdc.cruise.model.IEvent;
 import be.naturalsciences.bmdc.cruise.model.ILinkedDataTerm;
 import be.naturalsciences.bmdc.cruise.model.IPerson;
+import be.naturalsciences.bmdc.cruise.model.IPlatform;
 import be.naturalsciences.bmdc.cruise.model.IProgram;
 import be.naturalsciences.bmdc.cruise.model.IProperty;
 import be.naturalsciences.bmdc.cruise.model.ITool;
@@ -19,7 +20,7 @@ import java.util.Collection;
  *
  * @author thomas
  */
-public abstract class Event implements IEvent {
+public class Event implements IEvent {
 
     private int id; //the database PK
     private String identifier;
@@ -33,6 +34,7 @@ public abstract class Event implements IEvent {
     private ILinkedDataTerm action;
     private Collection<? extends IProperty> properties;
     private IProgram program;
+    private Platform platform;
 
     @Override
     public String getIdentifier() {
@@ -142,6 +144,14 @@ public abstract class Event implements IEvent {
     @Override
     public void setProgram(IProgram program) {
         this.program = program;
+    }
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(IPlatform platform) {
+        this.platform = (Platform) platform;
     }
 
     @Override

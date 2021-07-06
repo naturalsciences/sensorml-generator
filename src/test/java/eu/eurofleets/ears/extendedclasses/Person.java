@@ -125,4 +125,9 @@ public class Person implements IPerson {
         return true;
     }
 
+    @Override
+    public String getFirstNameLastName() {
+        return firstName + " " + lastName;
+    }
+
 }

@@ -1,7 +1,7 @@
 package eu.eurofleets.ears.extendedclasses;
 
 import be.naturalsciences.bmdc.cruise.model.ILinkedDataTerm;
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,6 +17,8 @@ public class LinkedDataTerm implements ILinkedDataTerm {
     private String identifier;  //an identifier in an external vocabulary, i.e. the EARS ontology or the BODC Tool list L22 (can only be url)
     private String transitiveIdentifier;  //an identifier in an external vocabulary, i.e. the EARS ontology or the BODC Tool list L22 (can only be url)
     private String name;
+    private String urn;
+    private String transitiveUrn;
 
     @Override
     public String getIdentifier() {
@@ -43,6 +45,19 @@ public class LinkedDataTerm implements ILinkedDataTerm {
         this.name = name;
     }
 
+    /* public LinkedDataTerm(String identifier, String name, String urn) {
+        this.identifier = identifier;
+        this.name = name;
+        this.urn = urn;
+    }*/
+    public LinkedDataTerm(String identifier, String transitiveIdentifier, String name) {
+        this.identifier = ILinkedDataTerm.cleanUrl(identifier);
+        this.name = name;
+        this.transitiveIdentifier = transitiveIdentifier;
+        this.urn = ILinkedDataTerm.getUrnFromUrl(identifier);
+        this.transitiveUrn = ILinkedDataTerm.getUrnFromUrl(transitiveIdentifier);
+    }
+
     @Override
     public String getTransitiveIdentifier() {
         return transitiveIdentifier != null ? transitiveIdentifier : identifier;
@@ -55,31 +70,61 @@ public class LinkedDataTerm implements ILinkedDataTerm {
 
     @Override
     public String getUrn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return urn;
     }
 
     @Override
     public void setUrn(String urn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.urn = urn;
     }
 
     @Override
     public String getTransitiveUrn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return transitiveUrn;
     }
 
     @Override
     public void setTransitiveUrn(String transitiveUrn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.transitiveUrn = transitiveUrn;
     }
 
     @Override
     public ILinkedDataTerm getTerm() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this;
     }
 
     @Override
-    public void setTerm(ILinkedDataTerm country) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setTerm(ILinkedDataTerm term) {
+
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.identifier);
+        hash = 97 * hash + Objects.hashCode(this.transitiveIdentifier);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LinkedDataTerm other = (LinkedDataTerm) obj;
+        if (!Objects.equals(this.identifier, other.identifier)) {
+            return false;
+        }
+        if (!Objects.equals(this.transitiveIdentifier, other.transitiveIdentifier)) {
+            return false;
+        }
+        return true;
+    }
+
 }

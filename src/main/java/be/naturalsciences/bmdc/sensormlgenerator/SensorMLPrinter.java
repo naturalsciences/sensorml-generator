@@ -60,7 +60,12 @@ public class SensorMLPrinter<S extends AbstractPhysicalProcessType> {
         JAXBElement<S> jaxbElement = new JAXBElement<S>(new QName("sml", CLASS_TO_XML.get(cls)), cls, system);
 
         marshaller.marshal(jaxbElement, writer);
-        return writer.toString();
+        String r = writer.toString();
+        r = r.replace(" xsi:type=\"swe:QuantityPropertyType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
+        r = r.replace(" xsi:type=\"swe:CountPropertyType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
+        r = r.replace(" xsi:type=\"swe:TextPropertyType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
+        r = r.replaceAll("<sml:value>\\|(.*?)\\|", "<!--$1--><sml:value>");
+        return r;
     }
 
     public void print() throws JAXBException {

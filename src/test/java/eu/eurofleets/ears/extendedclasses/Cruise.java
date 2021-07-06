@@ -1,5 +1,6 @@
 package eu.eurofleets.ears.extendedclasses;
 
+import be.naturalsciences.bmdc.cruise.model.ICoordinate;
 import be.naturalsciences.bmdc.cruise.model.ICruise;
 import be.naturalsciences.bmdc.cruise.model.IEvent;
 import be.naturalsciences.bmdc.cruise.model.IHarbour;
@@ -44,6 +45,12 @@ public class Cruise implements ICruise {
     private Collection<? extends ILinkedDataTerm> P02;
     private String name;
     private Collection<? extends IEvent> events;
+    private String dataUrl;
+    private String trackGmlUrl;
+    private String trackImageUrl;
+    private String planningUrl;
+    private String finalReportUrl;
+    private String purpose;
 
     @Override
     public String getIdentifier() {
@@ -55,12 +62,10 @@ public class Cruise implements ICruise {
         this.identifier = identifier;
     }
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -254,5 +259,105 @@ public class Cruise implements ICruise {
             }
         }
         return tools;
+    }
+
+    @Override
+    public Collection<? extends ICoordinate> getTrack() {
+        return null;
+    }
+
+    @Override
+    public void setTrack(Collection<? extends ICoordinate> coordinates) {
+
+    }
+
+    public String getFinalReportUrl() {
+        return finalReportUrl;
+    }
+
+    public void setFinalReportUrl(String finalReportUrl) {
+        this.finalReportUrl = finalReportUrl;
+    }
+
+    public String getPlanningUrl() {
+        return planningUrl;
+    }
+
+    public void setPlanningUrl(String planningUrl) {
+        this.planningUrl = planningUrl;
+    }
+
+    public String getTrackImageUrl() {
+        return trackImageUrl;
+    }
+
+    public void setTrackImageUrl(String trackImageUrl) {
+        this.trackImageUrl = trackImageUrl;
+    }
+
+    public String getTrackGmlUrl() {
+        return trackGmlUrl;
+    }
+
+    public void setTrackGmlUrl(String trackGmlUrl) {
+        this.trackGmlUrl = trackGmlUrl;
+    }
+
+    public String getDataUrl() {
+        return dataUrl;
+    }
+
+    public void setDataUrl(String dataUrl) {
+        this.dataUrl = dataUrl;
+    }
+
+    @Override
+    public void setSouthBoundLatitude(double y) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setNorthBoundLatitude(double y) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setWestBoundLongitude(double x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setEastBoundLongitude(double x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getWestBoundLongitude() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getEastBoundLongitude() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getNorthBoundLatitude() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getSouthBoundLatitude() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getPurpose() {
+        return purpose;
+    }
+
+    @Override
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 }

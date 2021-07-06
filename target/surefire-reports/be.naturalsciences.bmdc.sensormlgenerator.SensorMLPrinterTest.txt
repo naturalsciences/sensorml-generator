@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: be.naturalsciences.bmdc.sensormlgenerator.SensorMLPrinterTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 3.569 sec
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 3, Time elapsed: 4.154 sec
