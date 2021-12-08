@@ -204,7 +204,7 @@ public class SensorMLBuilder {
 
         /*IDENTIFIER*/
         CodeWithAuthorityType identifier = gml.createCodeWithAuthorityType();
-        String sensorInstanceUrl = componentTerm.getIdentifier(); //get the identifier of the sensor instance
+        String sensorInstanceUrl = componentTerm.getTransitiveIdentifier(); //get the identifier of the sensor instance
 
         identifier.setValue(sensorInstanceUrl);
         component.setIdentifier(identifier);
@@ -218,7 +218,9 @@ public class SensorMLBuilder {
         ContactListPropertyType contactListProperty = sml.createContactListPropertyType();
         ContactListType contactList = sml.createContactListType();
         contactList.getContact().add(createContact(metadataResponsible, Role.POINT_OF_CONTACT));
-        contactList.getContact().add(createContact(this.platform.getVesselOperator(), Role.POINT_OF_CONTACT));
+        if (this.platform != null && this.platform.getVesselOperator() != null) {
+            contactList.getContact().add(createContact(this.platform.getVesselOperator(), Role.POINT_OF_CONTACT));
+        }
         contactListProperty.setContactList(contactList);
         component.getContacts().add(contactListProperty);
         /*EVENT HISTORY*/
@@ -243,7 +245,7 @@ public class SensorMLBuilder {
         /*IDENTIFICATION*/
         IdentifierListPropertyType identifierListPropertyType = sml.createIdentifierListPropertyType();
         IdentifierListType identifierList = getIdentifierList(identifierListPropertyType);
-        addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0003", "Model name"), tool.getTerm()); //value with name and url
+        addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0015", "Model ID"), tool.getTerm()); //value with name and url
         addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0003", "Model name"), tool.getTerm().getName()); //value with just name
         addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0005/", "Serial number"), tool.getSerialNumber());
 
@@ -300,34 +302,39 @@ public class SensorMLBuilder {
             systemOrComponent.getCapabilities().add(capabilities);
         }
 
-        /*LOCATION*/
-        IProperty location = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_27")).findFirst().orElse(null);
-        LocationPropertyType lpt = gml.createLocationPropertyType();
-        lpt.setLocationString(createString2(location.getValue()));
-        systemOrComponent.setLocation(gml.createLocation(lpt));
-        /*LOCAL REFERENCE FRAME*/
-        AbstractPhysicalProcessType.LocalReferenceFrame f = new AbstractPhysicalProcessType.LocalReferenceFrame();
-        SpatialFrameType spatialFrame = sml.createSpatialFrameType();
-        f.setSpatialFrame(spatialFrame);
-        spatialFrame.setOrigin("Starboard GPS Dome");
-        IProperty xOffset = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_25")).findFirst().orElse(null);
-        IProperty yOffset = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_26")).findFirst().orElse(null);
-        IProperty zOffset = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_1")).findFirst().orElse(null);
+        if (tool.getCharacteristics() != null) {
+            /*LOCATION*/
+            IProperty location = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_27")).findFirst().orElse(null);
+            if (location != null) {
+                LocationPropertyType lpt = gml.createLocationPropertyType();
+                lpt.setLocationString(createString2(location.getValue()));
+                systemOrComponent.setLocation(gml.createLocation(lpt));
+            }
 
-        if (xOffset != null && yOffset != null && zOffset != null) {
-            SpatialFrameType.Axis xAxis = sml.createSpatialFrameTypeAxis();
-            xAxis.setName("Starboard-Port axis (X)");
-            xAxis.setValue(xOffset.getValue() + " " + xOffset.getUom());
-            SpatialFrameType.Axis yAxis = sml.createSpatialFrameTypeAxis();
-            yAxis.setName("Stern-bow axis (Y)");
-            xAxis.setValue(yOffset.getValue() + " " + yOffset.getUom());
-            SpatialFrameType.Axis zAxis = sml.createSpatialFrameTypeAxis();
-            zAxis.setName("Vertical axis (Z)");
-            zAxis.setValue(zOffset.getValue() + " " + zOffset.getUom());
-            spatialFrame.getAxis().add(xAxis);
-            spatialFrame.getAxis().add(yAxis);
-            spatialFrame.getAxis().add(zAxis);
-            systemOrComponent.getLocalReferenceFrame().add(f);
+            /*LOCAL REFERENCE FRAME*/
+            AbstractPhysicalProcessType.LocalReferenceFrame f = new AbstractPhysicalProcessType.LocalReferenceFrame();
+            SpatialFrameType spatialFrame = sml.createSpatialFrameType();
+            f.setSpatialFrame(spatialFrame);
+            spatialFrame.setOrigin("Starboard GPS Dome");
+            IProperty xOffset = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_25")).findFirst().orElse(null);
+            IProperty yOffset = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_26")).findFirst().orElse(null);
+            IProperty zOffset = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://ontologies.ef-ears.eu/ears2/1#pry_1")).findFirst().orElse(null);
+
+            if (xOffset != null && yOffset != null && zOffset != null) {
+                SpatialFrameType.Axis xAxis = sml.createSpatialFrameTypeAxis();
+                xAxis.setName("Starboard-Port axis (X)");
+                xAxis.setValue(xOffset.getValue() + " " + xOffset.getUom());
+                SpatialFrameType.Axis yAxis = sml.createSpatialFrameTypeAxis();
+                yAxis.setName("Stern-bow axis (Y)");
+                xAxis.setValue(yOffset.getValue() + " " + yOffset.getUom());
+                SpatialFrameType.Axis zAxis = sml.createSpatialFrameTypeAxis();
+                zAxis.setName("Vertical axis (Z)");
+                zAxis.setValue(zOffset.getValue() + " " + zOffset.getUom());
+                spatialFrame.getAxis().add(xAxis);
+                spatialFrame.getAxis().add(yAxis);
+                spatialFrame.getAxis().add(zAxis);
+                systemOrComponent.getLocalReferenceFrame().add(f);
+            }
         }
     }
 
@@ -375,12 +382,13 @@ public class SensorMLBuilder {
         List<ComponentListType.Component> componentList = componentListType.getComponent();
         physicalSystem.setComponents(componentsType);
         Set<? extends ITool> instruments = this.platform.getInstruments();
+        String platformUrn = ILinkedDataTerm.getUrnFromUrl(platform.getTerm().getIdentifier());
         for (ITool instrument : instruments) {
             ComponentListType.Component component = sml.createComponentListTypeComponent();
             component.setName(instrument.getTerm().getName());
-            component.setTitle(instrument.getTerm().getTransitiveIdentifier());
+            component.setTitle(instrument.getTerm().getIdentifier());
             String deviceUrn = ILinkedDataTerm.getUrnFromUrl(instrument.getTerm().getIdentifier());
-            String platformUrn = ILinkedDataTerm.getUrnFromUrl(platform.getTerm().getIdentifier());
+            
             component.setHref(server + "/sml?deviceUrn=" + deviceUrn + "&platformUrn=" + platformUrn);
             componentList.add(component);
         }

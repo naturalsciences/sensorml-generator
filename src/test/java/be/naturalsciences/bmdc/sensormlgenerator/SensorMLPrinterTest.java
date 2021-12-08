@@ -85,7 +85,6 @@ public class SensorMLPrinterTest {
      * Test of getResult method, of class SensorMLPrinter.
      */
     @Test
-    @Ignore
     public void testGetPhysicalSystemResult() throws Exception {
         System.out.println("getPhysicalSystem");
         Platform p = generateANiceTestPlatform();
@@ -94,11 +93,10 @@ public class SensorMLPrinterTest {
         SensorMLPrinter instance = new SensorMLPrinter(physicalSystem, physicalSystem.getClass());
         String result = instance.getResult();
         System.out.println(result);
-        assertTrue(result.contains("<PhysicalSystem xmlns"));
+        assertTrue(result.contains("<PhysicalSystem gml:id=\"component_0\" xmlns"));
         assertTrue(result.contains("<sml:component"));
-        assertTrue(result.contains("Van Veen grab"));
-        assertTrue(result.contains("<sml:label>Instrument model</sml:label>"));
-        assertTrue(result.contains("<sml:component name=\"Van Veen grab\" xlink:href=\"https://ears.bmdc.be/ears2/sml?deviceUrn=SDN:L22::TOOL0653&amp;platformUrn=SDN:C17::11BE\" xlink:title=\"http://vocab.nerc.ac.uk/collection/L22/current/TOOL0653/\"/>"));
+        assertTrue(result.contains("GizmoTools RS-353"));
+        assertTrue(result.contains("<sml:component name=\"GizmoTools RS-353\" xlink:href=\"https://ears.bmdc.be/ears2/sml?deviceUrn=ears:dev::25&amp;platformUrn=SDN:C17::11BE\" xlink:title=\"http://ontologies.ef-ears.eu/ears2/1#dev_25\"/>"));
     }
 
     /**
@@ -132,7 +130,7 @@ public class SensorMLPrinterTest {
         assertTrue(result.contains("<!--Removal--><sml:value>http://ontologies.ef-ears.eu/ears2/1#pro_3</sml:value>"));
         assertTrue(result.contains("<gml:timePosition>2020-08-31T17:20:15Z</gml:timePosition>"));
         assertTrue(result.contains("<swe:label>Intake depth</swe:label>"));
-        assertTrue(result.contains("<gml:identifier>http://ontologies.ef-ears.eu/ears2/1#dev_25</gml:identifier>"));
+        assertTrue(result.contains("<gml:identifier>http://vocab.nerc.ac.uk/collection/L22/current/TOOL0653/</gml:identifier>"));
         assertTrue(result.contains("<gml:name>GizmoTools RS-353</gml:name>"));
         assertTrue(!result.contains("<swe:label>Offset along the Y-axis</swe:label>"));
         assertTrue(!result.contains("<sml:characteristic xlink:href=\"http://ontologies.ef-ears.eu/ears2/1#pry_27\" xlink:title=\"Location on ths ship\">"));
