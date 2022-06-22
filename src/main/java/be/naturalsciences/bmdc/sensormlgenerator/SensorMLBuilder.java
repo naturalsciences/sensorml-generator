@@ -347,7 +347,7 @@ public class SensorMLBuilder {
                 xAxis.setValue(xOffset.getValue() + " " + xOffset.getUom());
                 SpatialFrameType.Axis yAxis = sml.createSpatialFrameTypeAxis();
                 yAxis.setName("Stern-bow axis (Y)");
-                xAxis.setValue(yOffset.getValue() + " " + yOffset.getUom());
+                yAxis.setValue(yOffset.getValue() + " " + yOffset.getUom());
                 SpatialFrameType.Axis zAxis = sml.createSpatialFrameTypeAxis();
                 zAxis.setName("Vertical axis (Z)");
                 zAxis.setValue(zOffset.getValue() + " " + zOffset.getUom());
