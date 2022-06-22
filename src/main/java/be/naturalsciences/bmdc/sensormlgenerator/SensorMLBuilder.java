@@ -241,13 +241,34 @@ public class SensorMLBuilder {
     private void decoratePlatform(PhysicalSystemType system, IPlatform platform) {
     }
 
+    private static List<String> FAKE_CHARACTERISTICS = Arrays.asList(new String[]{"http://ontologies.ef-ears.eu/ears2/1#pry_25", "http://ontologies.ef-ears.eu/ears2/1#pry_26", "http://ontologies.ef-ears.eu/ears2/1#pry_27", "http://ontologies.ef-ears.eu/ears2/1#pry_1", "http://vocab.nerc.ac.uk/collection/W07/current/IDEN0012/", "http://vocab.nerc.ac.uk/collection/W07/current/IDEN0008/", "http://vocab.nerc.ac.uk/collection/W07/current/IDEN0007/"});
+
     private void decorateInstrumentOrSensor(AbstractPhysicalProcessType systemOrComponent, ITool tool, Collection<? extends IEvent> events) {
         /*IDENTIFICATION*/
         IdentifierListPropertyType identifierListPropertyType = sml.createIdentifierListPropertyType();
         IdentifierListType identifierList = getIdentifierList(identifierListPropertyType);
-        addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0015", "Model ID"), tool.getTerm()); //value with name and url
+        addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0015", "Model ID in vocab"), tool.getTerm()); //value with name and url
         addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0003", "Model name"), tool.getTerm().getName()); //value with just name
         addIdentifier(identifierList, getLinkedDataTerm("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0005/", "Serial number"), tool.getSerialNumber());
+
+        IProperty manufacturer = null;
+        IProperty uuid = null;
+        IProperty uniqueId = null;
+
+        if (tool.getCharacteristics() != null) {
+            manufacturer = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0012/")).findFirst().orElse(null);
+            uuid = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0008/")).findFirst().orElse(null);
+            uniqueId = tool.getCharacteristics().stream().filter(t -> t.getKey().getIdentifier().equals("http://vocab.nerc.ac.uk/collection/W07/current/IDEN0007/")).findFirst().orElse(null);
+        }
+        if (manufacturer != null) {
+            addIdentifier(identifierList, manufacturer.getKey(), manufacturer.getValue());
+        }
+        if (uuid != null) {
+            addIdentifier(identifierList, uuid.getKey(), uuid.getValue());
+        }
+        if (uniqueId != null) {
+            addIdentifier(identifierList, uniqueId.getKey(), uniqueId.getValue());
+        }
 
         systemOrComponent.getIdentification().add(identifierListPropertyType);
 
@@ -278,7 +299,7 @@ public class SensorMLBuilder {
         if (tool.getCharacteristics() != null && !tool.getCharacteristics().isEmpty()) {
             for (IProperty prop : tool.getCharacteristics()) {
                 String identifier = prop.getKey().getIdentifier();
-                if (!identifier.equals("http://ontologies.ef-ears.eu/ears2/1#pry_25") && !identifier.equals("http://ontologies.ef-ears.eu/ears2/1#pry_26") && !identifier.equals("http://ontologies.ef-ears.eu/ears2/1#pry_1") && !identifier.equals("http://ontologies.ef-ears.eu/ears2/1#pry_27")) {
+                if (!FAKE_CHARACTERISTICS.contains(identifier)) {
                     CharacteristicListType.Characteristic characteristic = sml.createCharacteristicListTypeCharacteristic();
                     characteristicsList.getCharacteristic().add(characteristic);
                     characteristic = (CharacteristicListType.Characteristic) decorateCharacteristicOrCapability(characteristic, prop);
@@ -388,7 +409,7 @@ public class SensorMLBuilder {
             component.setName(instrument.getTerm().getName());
             component.setTitle(instrument.getTerm().getIdentifier());
             String deviceUrn = ILinkedDataTerm.getUrnFromUrl(instrument.getTerm().getIdentifier());
-            
+
             component.setHref(server + "/sml?deviceUrn=" + deviceUrn + "&platformUrn=" + platformUrn);
             componentList.add(component);
         }
@@ -437,7 +458,7 @@ public class SensorMLBuilder {
      * @return
      */
     private TermType getSmlTerm(ILinkedDataTerm key, String value) {
-        return getSmlTerm(key.getIdentifier(), value);
+        return getSmlTerm("|" + key.getName() + "|" + key.getIdentifier(), value);
     }
 
     /**

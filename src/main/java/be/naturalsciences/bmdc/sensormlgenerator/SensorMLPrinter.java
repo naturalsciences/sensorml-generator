@@ -65,6 +65,8 @@ public class SensorMLPrinter<S extends AbstractPhysicalProcessType> {
         r = r.replace(" xsi:type=\"swe:CountPropertyType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
         r = r.replace(" xsi:type=\"swe:TextPropertyType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
         r = r.replaceAll("<sml:value>\\|(.*?)\\|", "<!--$1--><sml:value>");
+        r = r.replaceAll("<sml:label>\\|(.*?)\\|", "<!--$1--><sml:label>");
+        
         return r;
     }
 
