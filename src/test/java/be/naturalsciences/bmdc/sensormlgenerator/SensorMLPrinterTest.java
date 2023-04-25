@@ -66,20 +66,7 @@ public class SensorMLPrinterTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of createFile method, of class SensorMLPrinter.
-     */
-    @Test
-    @Ignore
-    public void testCreateFile() throws Exception {
-        System.out.println("createFile");
-        File file = null;
-        boolean overwrite = false;
-        SensorMLPrinter instance = null;
-        instance.createFile(file, overwrite);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
+
 
     /**
      * Test of getResult method, of class SensorMLPrinter.
@@ -137,18 +124,6 @@ public class SensorMLPrinterTest {
 
     }
 
-    /**
-     * Test of print method, of class SensorMLPrinter.
-     */
-    @Test
-    @Ignore
-    public void testPrint() throws Exception {
-        System.out.println("print");
-        SensorMLPrinter instance = null;
-        instance.print();
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
 
     public Organisation generateMetadataResponsible() {
         Country belgium = new Country(new LinkedDataTerm("C32:BE", "Belgium"));
